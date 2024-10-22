@@ -5,8 +5,10 @@ from pathlib import Path
 dataset_directory_path = Path('./')
 dataset_folder_name = './Dataset'
 
-# Dataset names storage file
-dataset_names_filename = 'dataset_names.txt'
+# Dataset names storage files
+training_dataset_names_filename = 'training_dataset_names.txt'
+test_dataset_names_filename = 'test_dataset_names.txt'
 
-# Fulll dataset storage file
-dataset_storage_filename = 'airfrans_dataset2.h5'
+# Full dataset storage files
+training_dataset_filename = 'training_dataset.h5'
+test_dataset_filename = 'test_dataset.h5'
