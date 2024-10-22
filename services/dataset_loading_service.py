@@ -1,12 +1,8 @@
-from pathlib import Path
 import airfrans as af
 import logging
 from typing import List
 
-# Define the directory and folder paths
-directory_path = Path('./')
-folder_name = './Dataset'
-
+import globals
 # TODO: get training and dataset
 # TODO: better naming
 def load_dataset_names(task: str = 'full', train: bool = True, output_file: str = "dataset_names.txt") -> None:
@@ -19,7 +15,7 @@ def load_dataset_names(task: str = 'full', train: bool = True, output_file: str 
     """
     # Load the dataset names using the airfrans API
     # TODO: check this underscore !
-    _, dataset_names = af.dataset.load(root=str(directory_path / folder_name), 
+    _, dataset_names = af.dataset.load(root=str(globals.dataset_directory_path / globals.dataset_folder_name), 
                                                   task=task, train=train)
 
     # Save the dataset names to the output file

@@ -3,6 +3,7 @@ import airfrans as af
 import pandas as pd
 from typing import Dict
 
+import globals
 from services.dataset_loading_service import read_dataset_names
 
 def process_simulation_dataset(dataset_name: str) -> pd.DataFrame:
@@ -14,7 +15,7 @@ def process_simulation_dataset(dataset_name: str) -> pd.DataFrame:
     Returns:
         pd.DataFrame: A dataframe containing the simulation data.
     """
-    simulation = af.Simulation(root='./Dataset', name=dataset_name, T=298.15)
+    simulation = af.Simulation(root=globals.dataset_folder_name, name=dataset_name, T=298.15)
 
     simulation_data: Dict = {
         'x': simulation.position[:, 0],
@@ -38,7 +39,10 @@ def process_simulation_datasets() -> pd.DataFrame:
     """
     
     # TODO: Check column name conventions within the scope of ML (e.g.: prefix/suffix input/target)
-    dataset_names = read_dataset_names()
+    
+    # Run only once - already run and filenames stored for efficiency
+    # load_dataset_names()
+    dataset_names = read_dataset_names(input_file = globals.dataset_names_filename)
     training_df = pd.DataFrame()
     
     for i, dataset_name in enumerate(dataset_names):
