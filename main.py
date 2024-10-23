@@ -1,15 +1,14 @@
 import time
 import logging
 from typing import List, Tuple, Dict
-import globals
-from pathlib import Path
+import config.globals as globals
 
-from services.dataset_loading_service import load_datasets_names
-from services.logging_service import setup_logging
-from services.simulation_processing_service import process_simulation_datasets
-from services.data_visualization_service import visualize_simulation
-from services.stats_calculation_service import calculate_statistics
-from services.dataset_storing_service import save_dataset_to_csv, save_dataset_to_table
+from modules.dataset_loading import load_datasets_names
+from modules.logging import setup_logging
+from modules.simulation_processing import process_simulation_datasets
+from modules.data_visualization import visualize_simulation
+from modules.stats_calculation import calculate_statistics
+from modules.dataset_storage import save_dataset_to_csv, save_dataset_to_table
 
 # TODO: add more typing here?
 def main() -> None:

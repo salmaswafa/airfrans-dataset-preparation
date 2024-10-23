@@ -4,7 +4,7 @@ import pandas as pd
 from typing import Dict
 
 import config.globals as globals
-from services.dataset_loading_service import load_dataset_names, read_dataset_names
+from modules.dataset_loading import load_dataset_names, read_dataset_names
 
 def process_simulation_dataset(dataset_name: str) -> pd.DataFrame:
     """Process a single simulation and extract relevant data.
