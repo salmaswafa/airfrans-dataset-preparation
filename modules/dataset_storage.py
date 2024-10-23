@@ -19,7 +19,7 @@ def save_dataset_to_table(df: pd.DataFrame, table_path: str = globals.TEST_TABLE
     # Write the DataFrame to a Delta table
     df.write.format("delta").mode("overwrite").saveAsTable(table_path)
 
-    logging.info(f"Finished writing dataset {df} to {table_path}")
+    logging.info(f"Finished writing dataset to {table_path}")
     
 def save_dataset_to_csv(df: pd.DataFrame, filename: str = 'airfrans_dataset.csv') -> None:
     """Save the training dataset to an CSV file.
