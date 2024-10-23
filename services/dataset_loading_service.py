@@ -15,7 +15,10 @@ def load_dataset_names(task: str = 'full', train: bool = True, output_file: str 
     """
     # Load the dataset names using the airfrans API
     # TODO: check this underscore !
-    _, dataset_names = af.dataset.load(root=str(globals.dataset_directory_path / globals.dataset_folder_name), 
+    # TODO: remove print- and all prints
+    print(f'PATH!!: "{str(globals.DATASET_PATHS[globals.ENV]["DIRECTORY_PATH"] / globals.DATASET_PATHS[globals.ENV]["DATASET_FOLDER_NAME"])}"')
+    # print(f'PATH!!: "{str(globals.DATASET_PATHS[globals.ENV]['DIRECTORY_PATH'] / globals.DATASET_PATHS[globals.ENV]['DATASET_FOLDER_NAME'])}"')
+    _, dataset_names = af.dataset.load(root=str(globals.DATASET_PATHS[globals.ENV]['DIRECTORY_PATH'] / globals.DATASET_PATHS[globals.ENV]['DATASET_FOLDER_NAME']), 
                                                   task=task, train=train)
 
     # Save the dataset names to the output file
@@ -30,8 +33,8 @@ def load_dataset_names(task: str = 'full', train: bool = True, output_file: str 
 def load_datasets_names() -> None:
     """Load dataset names from both the training and test datasets in their respective files.
     """
-    load_dataset_names(train = True, output_file = globals.training_dataset_names_filename)
-    load_dataset_names(train = False, output_file = globals.test_dataset_names_filename)
+    load_dataset_names(train = True, output_file = globals.TRAINING_DATASET_NAMES_FILENAME)
+    load_dataset_names(train = False, output_file = globals.TEST_DATASET_NAMES_FILENAME)
 
 def read_dataset_names(input_file: str = "training_dataset_names.txt") -> List[str]:
     """Read the dataset names from a file and return them as a list.

@@ -15,7 +15,7 @@ def process_simulation_dataset(dataset_name: str) -> pd.DataFrame:
     Returns:
         pd.DataFrame: A dataframe containing the simulation data.
     """
-    simulation = af.Simulation(root=globals.dataset_folder_name, name=dataset_name, T=298.15)
+    simulation = af.Simulation(root=str(globals.DATASET_PATHS[globals.ENV]['DIRECTORY_PATH'] / globals.DATASET_PATHS[globals.ENV]['DATASET_FOLDER_NAME']), name=dataset_name, T=298.15)
 
     simulation_data: Dict = {
         'x': simulation.position[:, 0],
@@ -28,7 +28,7 @@ def process_simulation_dataset(dataset_name: str) -> pd.DataFrame:
     return pd.DataFrame(simulation_data)
 
 # TODO: write docstring for this function
-def process_simulation_datasets(input_file: str = globals.training_dataset_names_filename) -> pd.DataFrame:
+def process_simulation_datasets(input_file: str = globals.TRAINING_DATASET_NAMES_FILENAME) -> pd.DataFrame:
     """Process a single simulation and extract relevant data.
 
     Args:
@@ -45,7 +45,7 @@ def process_simulation_datasets(input_file: str = globals.training_dataset_names
     
     for i, dataset_name in enumerate(dataset_names):
         if i % 10 == 0:  # Log every 10 iterations
-            logging.debug(f"Processing dataset {i+1}/{len(dataset_names)}: {dataset_name}")
+            logging.info(f"Processing dataset {i+1}/{len(dataset_names)}: {dataset_name}")
 
         # Process simulation data
         simulation_df = process_simulation_dataset(dataset_name)
@@ -54,5 +54,5 @@ def process_simulation_datasets(input_file: str = globals.training_dataset_names
         # TODO: remove?
         # Break for testing purposes, comment this out for full processing
         break
-
+    
     return full_df

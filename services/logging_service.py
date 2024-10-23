@@ -1,6 +1,6 @@
 import logging
 
-def setup_logging(console_level: int = logging.DEBUG, 
+def setup_logging(console_level: int = logging.INFO, 
                   file_level: int = logging.INFO, 
                   log_to_file: bool = False, 
                   filename: str = 'app.log') -> None:
