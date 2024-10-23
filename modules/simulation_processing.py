@@ -4,13 +4,13 @@ import pandas as pd
 from typing import Dict
 
 import config.globals as globals
-from modules.dataset_loading import load_dataset_names, read_dataset_names
+from modules.dataset_loading import read_dataset_names
 
 def process_simulation_dataset(dataset_name: str) -> pd.DataFrame:
     """Process a single simulation and extract relevant data.
 
     Args:
-        dataset_name (str): The name of the dataset to process.
+        dataset_name (str): The name of the simulation to process.
 
     Returns:
         pd.DataFrame: A dataframe containing the simulation data.
@@ -27,19 +27,17 @@ def process_simulation_dataset(dataset_name: str) -> pd.DataFrame:
 
     return pd.DataFrame(simulation_data)
 
-# TODO: write docstring for this function
 def process_simulation_datasets(input_file: str = globals.TRAINING_DATASET_NAMES_FILENAME) -> pd.DataFrame:
-    """Process a single simulation and extract relevant data.
+    """Process all simulations and extract relevant data.
 
     Args:
         input_file (str): The name of the file with the dataset simulation folder names.
 
     Returns:
-        pd.DataFrame: A dataframe containing the simulation data.
+        pd.DataFrame: A dataframe containing all simulation data (the whole dataset).
     """
     
     # TODO: Check column name conventions within the scope of ML (e.g.: prefix/suffix input/target)
-    
     dataset_names = read_dataset_names(input_file)
     full_df = pd.DataFrame()
     
@@ -51,7 +49,6 @@ def process_simulation_datasets(input_file: str = globals.TRAINING_DATASET_NAMES
         simulation_df = process_simulation_dataset(dataset_name)
         full_df = pd.concat([full_df, simulation_df])
 
-        # TODO: remove?
         # Break for testing purposes, comment this out for full processing
         break
     

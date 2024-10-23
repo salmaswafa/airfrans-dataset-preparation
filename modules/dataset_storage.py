@@ -4,17 +4,18 @@ from pyspark.sql import SparkSession
 import logging
 
 def save_dataset_to_table(df: pd.DataFrame, table_path: str = globals.TEST_TABLE_PATH) -> None:
-    """Save the training dataset to an HDF5 file.
+    """Save the training dataset to a delta table.
 
     Args:
-        training_df (pd.DataFrame): The dataframe to be saved.
-        filename (str): The name of the HDF5 file.
+        df (pd.DataFrame): The dataframe to be saved.
+        table_path (str): The path of the delta table.
     """
+    # Create Spark session
     spark = SparkSession.builder.getOrCreate()
     
-    # write to delta table
     logging.info(f"Started writing dataset to {table_path}")
-    # Convert Pandas DataFrame to PySpark DataFrame
+    
+    # Convert Pandas DataFrame to PySpark DataFrame (required to write to delta table)
     df = spark.createDataFrame(df)
     # Write the DataFrame to a Delta table
     df.write.format("delta").mode("overwrite").saveAsTable(table_path)
@@ -25,7 +26,7 @@ def save_dataset_to_csv(df: pd.DataFrame, filename: str = 'airfrans_dataset.csv'
     """Save the training dataset to an CSV file.
 
     Args:
-        training_df (pd.DataFrame): The dataframe to be saved.
+        df (pd.DataFrame): The dataframe to be saved.
         filename (str): The name of the CSV file.
     """
     

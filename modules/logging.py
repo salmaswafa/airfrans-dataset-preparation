@@ -7,7 +7,7 @@ def setup_logging(console_level: int = logging.INFO,
     """Set up logging configuration for the application.
 
     Args:
-        console_level (int): The logging level for console output (default is DEBUG).
+        console_level (int): The logging level for console output (default is INFO).
         file_level (int): The logging level for file output (default is INFO).
         log_to_file (bool): Whether to log messages to a file (default is False).
         filename (str): The filename for the log file if logging to file is enabled (default is 'app.log').
@@ -16,9 +16,7 @@ def setup_logging(console_level: int = logging.INFO,
     logging.basicConfig(level=console_level,
                         format='%(asctime)s - %(levelname)s - %(message)s')
     
-    # Suppress verbose logs from matplotlib
-    logging.getLogger('matplotlib').setLevel(logging.WARNING)
-
+    # Set up file logging
     if log_to_file:
         # Setup file logging if enabled
         file_handler = logging.FileHandler(filename)
