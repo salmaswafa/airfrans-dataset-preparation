@@ -58,6 +58,6 @@ def process_all_simulation_datasets(input_file: str = globals.TRAINING_DATASET_N
         full_df: pd.DataFrame = pd.concat([full_df, simulation_df])
 
         # Break for testing purposes, comment this out for full processing
-        break
+        # break
     
     return full_df
