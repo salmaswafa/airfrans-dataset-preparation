@@ -40,6 +40,6 @@ def read_dataset_names(input_file: str = "training_dataset_names.txt") -> List[s
         List[str]: A list of dataset names.
     """
     with open(input_file, "r") as file:
-        dataset_names = [line.strip() for line in file]
+        dataset_names: List[str] = [line.strip() for line in file]
     
     return dataset_names

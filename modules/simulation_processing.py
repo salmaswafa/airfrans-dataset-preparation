@@ -17,7 +17,7 @@ def process_simulation_dataset(dataset_name: str) -> pd.DataFrame:
     """
     simulation = af.Simulation(root=str(globals.DATASET_PATHS[globals.ENV]['DIRECTORY_PATH'] / globals.DATASET_PATHS[globals.ENV]['DATASET_FOLDER_NAME']), name=dataset_name, T=298.15)
 
-    simulation_data: Dict = {
+    simulation_data: Dict[str, pd.Series] = {
         'x': simulation.position[:, 0],
         'y': simulation.position[:, 1],
         'sdf': simulation.sdf[:, 0],
@@ -37,17 +37,16 @@ def process_simulation_datasets(input_file: str = globals.TRAINING_DATASET_NAMES
         pd.DataFrame: A dataframe containing all simulation data (the whole dataset).
     """
     
-    # TODO: Check column name conventions within the scope of ML (e.g.: prefix/suffix input/target)
-    dataset_names = read_dataset_names(input_file)
-    full_df = pd.DataFrame()
+    dataset_names: list[str] = read_dataset_names(input_file)
+    full_df: pd.DataFrame = pd.DataFrame()
     
     for i, dataset_name in enumerate(dataset_names):
-        if i % 10 == 0:  # Log every 10 iterations
+        if i % 100 == 0:  # Log every 100 iterations
             logging.info(f"Processing dataset {i+1}/{len(dataset_names)}: {dataset_name}")
 
         # Process simulation data
-        simulation_df = process_simulation_dataset(dataset_name)
-        full_df = pd.concat([full_df, simulation_df])
+        simulation_df: pd.DataFrame = process_simulation_dataset(dataset_name)
+        full_df: pd.DataFrame = pd.concat([full_df, simulation_df])
 
         # Break for testing purposes, comment this out for full processing
         break

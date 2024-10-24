@@ -1,4 +1,5 @@
 import logging
+from typing import Optional
 
 def setup_logging(console_level: int = logging.INFO, 
                   file_level: int = logging.INFO, 
@@ -19,9 +20,9 @@ def setup_logging(console_level: int = logging.INFO,
     # Set up file logging
     if log_to_file:
         # Setup file logging if enabled
-        file_handler = logging.FileHandler(filename)
+        file_handler: Optional[logging.FileHandler] = logging.FileHandler(filename)
         file_handler.setLevel(file_level)
-        file_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+        file_formatter: logging.Formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
         file_handler.setFormatter(file_formatter)
         
         # Add the file handler to the root logger

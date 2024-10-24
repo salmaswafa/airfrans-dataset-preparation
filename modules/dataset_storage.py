@@ -11,14 +11,14 @@ def save_dataset_to_table(df: pd.DataFrame, table_path: str = globals.TEST_TABLE
         table_path (str): The path of the delta table.
     """
     # Create Spark session
-    spark = SparkSession.builder.getOrCreate()
+    spark: SparkSession = SparkSession.builder.getOrCreate()
     
     logging.info(f"Started writing dataset to {table_path}")
     
     # Convert Pandas DataFrame to PySpark DataFrame (required to write to delta table)
-    df = spark.createDataFrame(df)
+    spark_df = spark.createDataFrame(df)
     # Write the DataFrame to a Delta table
-    df.write.format("delta").mode("overwrite").saveAsTable(table_path)
+    spark_df.write.format("delta").mode("overwrite").saveAsTable(table_path)
 
     logging.info(f"Finished writing dataset to {table_path}")
     
@@ -29,5 +29,8 @@ def save_dataset_to_csv(df: pd.DataFrame, filename: str = 'airfrans_dataset.csv'
         df (pd.DataFrame): The dataframe to be saved.
         filename (str): The name of the CSV file.
     """
+    logging.info(f"Started writing dataset to {filename}")
     
     df.to_csv(filename, sep=';', header=True, index=False)
+    
+    logging.info(f"Finished writing dataset to {filename}")
