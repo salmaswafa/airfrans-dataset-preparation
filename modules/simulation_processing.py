@@ -14,20 +14,29 @@ def process_simulation_dataset(dataset_name: str) -> pd.DataFrame:
 
     Returns:
         pd.DataFrame: A dataframe containing the simulation data.
+        
+    Raises:
+        ValueError: If the simulation cannot be loaded or has invalid data.
     """
-    simulation = af.Simulation(root=str(globals.DATASET_PATHS[globals.ENV]['DIRECTORY_PATH'] / globals.DATASET_PATHS[globals.ENV]['DATASET_FOLDER_NAME']), name=dataset_name, T=298.15)
+    
+    try:
+        simulation = af.Simulation(root=str(globals.DATASET_PATHS[globals.ENV]['DIRECTORY_PATH'] / globals.DATASET_PATHS[globals.ENV]['DATASET_FOLDER_NAME']), name=dataset_name, T=298.15)
 
-    simulation_data: Dict[str, pd.Series] = {
-        'x': simulation.position[:, 0],
-        'y': simulation.position[:, 1],
-        'sdf': simulation.sdf[:, 0],
-        'v_x': simulation.velocity[:, 0],
-        'v_y': simulation.velocity[:, 1]
-    }
+        simulation_data: Dict[str, pd.Series] = {
+            'x': simulation.position[:, 0],
+            'y': simulation.position[:, 1],
+            'sdf': simulation.sdf[:, 0],
+            'v_x': simulation.velocity[:, 0],
+            'v_y': simulation.velocity[:, 1]
+        }
 
-    return pd.DataFrame(simulation_data)
+        return pd.DataFrame(simulation_data)
+    
+    except Exception as e:
+        logging.error(f"Error processing simulation {dataset_name}: {e}")
+        raise ValueError(f"Failed to process simulation: {dataset_name}") from e
 
-def process_simulation_datasets(input_file: str = globals.TRAINING_DATASET_NAMES_FILENAME) -> pd.DataFrame:
+def process_all_simulation_datasets(input_file: str = globals.TRAINING_DATASET_NAMES_FILENAME) -> pd.DataFrame:
     """Process all simulations and extract relevant data.
 
     Args:

@@ -5,7 +5,7 @@ import pandas as pd
 
 from modules.logging import setup_logging
 from modules.dataset_loading import load_all_simulations_names
-from modules.simulation_processing import process_simulation_datasets
+from modules.simulation_processing import process_all_simulation_datasets
 from modules.dataset_storage import save_dataset_to_csv, save_dataset_to_table
 
 def main() -> None:
@@ -19,8 +19,8 @@ def main() -> None:
         load_all_simulations_names()
     
     # process datasets to extract wanted to datapoints
-    training_df: pd.DataFrame = process_simulation_datasets(globals.TRAINING_DATASET_NAMES_FILENAME)
-    test_df: pd.DataFrame = process_simulation_datasets(globals.TEST_DATASET_NAMES_FILENAME)
+    training_df: pd.DataFrame = process_all_simulation_datasets(globals.TRAINING_DATASET_NAMES_FILENAME)
+    test_df: pd.DataFrame = process_all_simulation_datasets(globals.TEST_DATASET_NAMES_FILENAME)
 
     if globals.ENV == globals.Environment.LOCAL:
         save_dataset_to_csv(df = training_df, filename = globals.TRAINING_DATASET_OUTPUT_FILENAME)

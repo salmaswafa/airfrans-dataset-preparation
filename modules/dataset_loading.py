@@ -11,18 +11,23 @@ def load_simulation_names(task: str = 'full', train: bool = True, output_file: s
         task (str): The type of task to load the dataset for (default is 'full'). Other ones are 'reynolds' for shorter datasets
         train (bool): Whether to load the training dataset (default is True). False loads test dataset.
         output_file (str): The name of the file to save the dataset names to (default is 'training_dataset_names.txt').
+    
+    Raises:
+        IOError: If there is an issue writing to the file.
     """
     # Load the simulation names using the airfrans API
     _, dataset_names = af.dataset.load(root=str(globals.DATASET_PATHS[globals.ENV]['DIRECTORY_PATH'] / globals.DATASET_PATHS[globals.ENV]['DATASET_FOLDER_NAME']), 
                                                   task=task, train=train)
 
     # Save the simulation names to the output file
-    with open(output_file, "w") as file:
-        for dataset_name in dataset_names:
-            file.write(dataset_name + "\n")
-    
-    # Log the completion of dataset name saving
-    logging.info(f"Dataset names saved to {output_file}")
+    try:
+        with open(output_file, "w") as file:
+            for dataset_name in dataset_names:
+                file.write(dataset_name + "\n")
+        logging.info(f"Simulation names successfully saved to {output_file}")
+    except IOError as io_error:
+        logging.error(f"Error writing to file {output_file}: {io_error}")
+        raise
 
 def load_all_simulations_names() -> None:
     """Load simulation names from both the training and test datasets from their respective files.
@@ -38,8 +43,18 @@ def read_dataset_names(input_file: str = "training_dataset_names.txt") -> List[s
 
     Returns:
         List[str]: A list of dataset names.
+        
+    Raises:
+        FileNotFoundError: If the input file is not found.
+        IOError: If there is an issue reading the file.
     """
-    with open(input_file, "r") as file:
-        dataset_names: List[str] = [line.strip() for line in file]
-    
-    return dataset_names
+    try:
+        with open(input_file, "r") as file:
+            dataset_names = [line.strip() for line in file]
+        return dataset_names
+    except FileNotFoundError as fnf_error:
+        logging.error(f"File {input_file} not found: {fnf_error}")
+        raise
+    except IOError as io_error:
+        logging.error(f"Error reading file {input_file}: {io_error}")
+        raise
