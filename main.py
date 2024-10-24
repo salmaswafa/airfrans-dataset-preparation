@@ -30,7 +30,7 @@ def main() -> None:
         save_dataset_to_table(df = training_df, table_path = globals.AIRFRANS_TRAINING_TABLE_PATH)
         save_dataset_to_table(df = test_df, table_path = globals.AIRFRANS_TEST_TABLE_PATH)
     
-    logging.info(f'Time taken: {time.time() - start_time:.2f} minutes')
+    logging.info(f'Time taken: {((time.time() - start_time)/60.0):.2f} minutes')
 
 if __name__ == "__main__":
     main()
